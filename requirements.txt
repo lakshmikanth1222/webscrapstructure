@@ -1,0 +1,12 @@
+ddgs
+requests
+beautifulsoup4
+google-genai
+rich
+pydantic
+flask
+markdown
+cloudscraper
+
+gunicorn
+Werkzeug
