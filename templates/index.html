@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal AI Scraper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Universal AI <span>Scraper</span></h1>
+            <p>Dynamically search, extract, and structure data from the web in seconds.</p>
+        </header>
+
+        <main>
+            <div class="glass-panel input-section">
+                <form id="scrape-form">
+                    <div class="form-group">
+                        <label for="api-key">Gemini API Key</label>
+                        <input type="password" id="api-key" name="api-key" placeholder="Enter your Gemini API Key" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="topic">Topic / Query</label>
+                        <input type="text" id="topic" name="topic" placeholder="e.g., latest high-end graphics cards" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="format">Output Format</label>
+                        <select id="format" name="format">
+                            <option value="table" selected>Markdown Table</option>
+                            <option value="json">Raw JSON</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="submit-btn">
+                        <span class="btn-text">Extract Data</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+
+            <div id="results-container" class="glass-panel results-section hidden">
+                <div class="results-header">
+                    <h2>Extracted Data</h2>
+                    <div id="sources-badge" class="badge"></div>
+                </div>
+                <div id="results-content"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
