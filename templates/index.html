@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="background-orbs">
@@ -52,7 +53,10 @@
             <div id="results-container" class="glass-panel results-section hidden">
                 <div class="results-header">
                     <h2>Extracted Data</h2>
-                    <div id="sources-badge" class="badge"></div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button id="download-btn" class="hidden btn-secondary" style="padding: 8px 16px; border-radius: 8px; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; transition: 0.3s; font-family: inherit; font-size: 0.9rem;">Download</button>
+                        <div id="sources-badge" class="badge"></div>
+                    </div>
                 </div>
                 <div id="results-content"></div>
             </div>
