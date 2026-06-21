@@ -58,6 +58,8 @@ def extract_structured_data(api_key, topic, scraped_texts, output_format):
     If the requested format is "json", output raw JSON inside a JSON code block.
     Ensure the data fields are relevant to the topic.
     
+    CRITICAL INSTRUCTION: If the scraped data contains any prices in US Dollars ($/USD), you MUST add an extra column (for table format) or field (for json format) showing the equivalent price in Indian Rupees (INR/₹). Calculate the INR price using an approximate current exchange rate. This INR column/field should ONLY be included if US Dollar prices are present in the data.
+    
     --- SCRAPED TEXT ---
     {combined_text[:60000]}
     """
