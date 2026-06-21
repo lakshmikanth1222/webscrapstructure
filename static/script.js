@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsContent = document.getElementById('results-content');
     const sourcesBadge = document.getElementById('sources-badge');
     const apiKeyInput = document.getElementById('api-key');
+    const downloadBtn = document.getElementById('download-btn');
+
+    let currentRawData = null;
+    let currentFormat = null;
 
     // Load API key from local storage
     const savedApiKey = localStorage.getItem('gemini_api_key');
@@ -33,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
         resultsContainer.classList.add('hidden');
         resultsContent.innerHTML = '';
+        downloadBtn.classList.add('hidden');
         
         try {
             const response = await fetch('/api/scrape', {
@@ -60,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsContent.innerHTML = data.html;
             sourcesBadge.textContent = `${data.urls.length} Sources Analyzed`;
             
+            currentRawData = data.raw;
+            currentFormat = format;
+            downloadBtn.classList.remove('hidden');
+            
             // Show Results Panel
             resultsContainer.classList.remove('hidden');
             
@@ -79,6 +88,30 @@ document.addEventListener('DOMContentLoaded', () => {
             btnText.textContent = 'Extract Data';
             spinner.classList.add('hidden');
             submitBtn.disabled = false;
+        }
+    });
+
+    downloadBtn.addEventListener('click', () => {
+        if (!currentRawData) return;
+
+        if (currentFormat === 'json') {
+            const blob = new Blob([currentRawData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'extracted_data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } else if (currentFormat === 'table') {
+            const tableElement = resultsContent.querySelector('table');
+            if (tableElement) {
+                const workbook = XLSX.utils.table_to_book(tableElement, {sheet: "Data"});
+                XLSX.writeFile(workbook, "extracted_data.xlsx");
+            } else {
+                alert("No table found to download.");
+            }
         }
     });
 });
